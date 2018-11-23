@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('app.layouts.master');
-});
+Route::get('/', 'Web\IndexController@index')->name('index');
+
+Route::resource('partners', 'Web\PartnersController');

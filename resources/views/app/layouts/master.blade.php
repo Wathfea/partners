@@ -17,7 +17,7 @@
 
 @include('app.layouts.navbar')
 
-<main role="main" class="container">
+<main role="main" class="container mt-5">
     @yield('content')
 </main><!-- /.container -->
 
