@@ -5,7 +5,6 @@ namespace App\Persistence\Repositories;
 use App\Models\Partner;
 use App\Persistence\Repositories\Interfaces\PartnerRepository;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Http\Request;
 
 class EloquentPartnerRepository implements PartnerRepository
 {
@@ -38,5 +37,33 @@ class EloquentPartnerRepository implements PartnerRepository
     public function store(Partner $partner): bool
     {
         return $partner->save();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findById(int $id): ?Partner
+    {
+        return $this->model->find($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function remove(int $id): bool
+    {
+        $partner = $this->findById($id);
+
+        return $partner->delete();
+    }
+    /**
+     * @inheritDoc
+     */
+    public function update(int $id, array $data): Partner
+    {
+        $partner = $this->findById($id);
+        $partner->fill($data)->save();
+
+        return $partner;
     }
 }

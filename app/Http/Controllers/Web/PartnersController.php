@@ -74,30 +74,49 @@ class PartnersController extends Controller
 
             return view('app.partners.index', compact('partners', 'error'));
         }
-
-
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $partner = $this->partnerRepository->findById($id);
+
+        if ($partner) {
+            return view('app.partners.show', compact('partner'));
+        } else {
+            $page = $request->get('page') ? $request->get('page') : 1;
+            $partners = $this->partnerRepository->getAll($page, 10);
+            $error = 'Can\'t find this resource. #ID:' . $id;
+
+            return view('app.partners.index', compact('partners', 'error'));
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $partner = $this->partnerRepository->findById($id);
+        if ($partner) {
+            return view('app.partners.edit', compact('partner'));
+        } else {
+            $page = $request->get('page') ? $request->get('page') : 1;
+            $partners = $this->partnerRepository->getAll($page, 10);
+            $error = 'Can\'t find this resource. #ID:' . $id;
+
+            return view('app.partners.index', compact('partners', 'error'));
+        }
     }
 
     /**
@@ -109,17 +128,39 @@ class PartnersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $partner = $this->partnerService->update($id, $request->all());
+
+            return view('app.partners.show', compact('partner'));
+        } catch (\Exception $e) {
+
+            $page = $request->get('page') ? $request->get('page') : 1;
+            $partners = $this->partnerRepository->getAll($page, 10);
+            $error = 'Can\'t update. Something went wrong.';
+
+            return view('app.partners.index', compact('partners', 'error'));
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        try {
+            $this->partnerService->delete($id);
+
+            return redirect()->route('partners.index', compact('partners'));
+        } catch (\Exception $e) {
+            $page = $request->get('page') ? $request->get('page') : 1;
+            $partners = $this->partnerRepository->getAll($page, 10);
+            $error = 'Can\'t delete. Something went wrong.';
+
+            return view('app.partners.index', compact('partners', 'error'));
+        }
     }
 }

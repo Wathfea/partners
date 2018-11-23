@@ -15,10 +15,28 @@ interface PartnerRepository
      */
     public function getAll(int $page, int $limit): Paginator;
 
-
     /**
      * @param Partner $partner
      * @return bool
      */
     public function store(Partner $partner): bool;
+
+    /**
+     * @param int $id
+     * @return Partner
+     */
+    public function findById(int $id): ?Partner;
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function remove(int $id): bool;
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return Partner
+     */
+    public function update(int $id, array $data): Partner;
 }

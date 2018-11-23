@@ -21,7 +21,6 @@ class PartnerService
         $this->repository = $repository;
     }
 
-
     /**
      * @param $data
      * @return bool
@@ -36,6 +35,37 @@ class PartnerService
         try {
             $newPartner = $this->repository->store($partner);
             return $newPartner;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return Partner
+     * @throws \Exception
+     */
+    public function update(int $id, array $data)
+    {
+        try {
+            $newPartner = $this->repository->update($id, $data);
+            return $newPartner;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     * @throws \Exception
+     */
+    public function delete(int $id)
+    {
+        try {
+            $deleted = $this->repository->remove($id);
+            return $deleted;
         } catch (\Exception $e) {
             throw $e;
         }

@@ -8,7 +8,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('index') }}"><i class="fa fa-cogs"></i> Home</a></li>
-            <li><a href="{{ route('partners.index') }}"><i class="fa fa-cogs"></i> Partners</a></li>
+            <li><a href="{{ route('partners.index') }}"><i class="fas fa-arrow-right"></i> Partners</a></li>
             <li class="active">Create New</li>
         </ol>
     </section>
