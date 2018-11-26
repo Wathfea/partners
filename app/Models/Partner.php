@@ -14,4 +14,12 @@ class Partner extends Model
     protected $fillable = [
         'name', 'point',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class, 'partners_properties')->withTimestamps();
+    }
 }

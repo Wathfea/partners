@@ -4,12 +4,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Create New Partner
+            Edit Property
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('index') }}"><i class="fa fa-cogs"></i> Home</a></li>
-            <li><a href="{{ route('partners.index') }}"><i class="fas fa-arrow-right"></i> Partners</a></li>
-            <li class="active">Edit #ID: {{ $partner->id }}</li>
+            <li><a href="{{ route('properties.index') }}"><i class="fas fa-arrow-right"></i> Properties</a></li>
+            <li class="active">Edit #ID: {{ $property->id }}</li>
         </ol>
     </section>
 
@@ -20,17 +20,17 @@
             <div class="col-lg-12">
 
                 <div class="box">
-                    <form method="POST" action="{{ route('partners.update', $partner->id) }}">
+                    <form method="POST" action="{{ route('properties.update', $property->id) }}">
                         @method('PUT')
                         @csrf
                         <div class="box-body">
-                            @include('app.partners._form', $partner)
+                            @include('app.properties._form', $property)
                         </div>
                         <!-- ./box-body -->
 
                         <div class="box-footer">
                             <div class="form-group">
-                                <a href="{{ route('partners.index') }}" class="btn btn-default">Back</a>
+                                <a href="{{ route('properties.index') }}" class="btn btn-default">Back</a>
                                 <button type="submit" class="btn btn-primary pull-right">Update</button>
                             </div>
                         </div>

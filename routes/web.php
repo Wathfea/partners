@@ -14,3 +14,4 @@
 Route::get('/', 'Web\IndexController@index')->name('index');
 
 Route::resource('partners', 'Web\PartnersController');
+Route::resource('properties', 'Web\PropertiesController');

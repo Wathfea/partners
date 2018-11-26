@@ -39,4 +39,11 @@ interface PartnerRepository
      * @return Partner
      */
     public function update(int $id, array $data): Partner;
+
+    /**
+     * @param Partner $partner
+     * @param array $propertyIds
+     * @return array
+     */
+    public function savePivot(Partner $partner, array $propertyIds): array ;
 }

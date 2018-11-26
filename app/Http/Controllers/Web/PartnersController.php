@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Persistence\Repositories\Interfaces\PartnerRepository;
+use App\Persistence\Repositories\Interfaces\PropertyRepository;
 use App\Services\PartnerService;
+use App\Services\PropertyService;
 use Illuminate\Http\Request;
 
 class PartnersController extends Controller
@@ -14,19 +16,29 @@ class PartnersController extends Controller
     private $partnerRepository;
     /** @var PartnerService */
     private $partnerService;
+    /** @var PropertyRepository */
+    private $propertyRepository;
+    /** @var PropertyService */
+    private $propertyService;
 
     /**
      * PartnersController constructor.
      * @param PartnerRepository $partnerRepository
      * @param PartnerService $partnerService
+     * @param PropertyRepository $propertyRepository
+     * @param PropertyService $propertyService
      */
     public function __construct(
         PartnerRepository $partnerRepository,
-        PartnerService $partnerService
+        PartnerService $partnerService,
+        PropertyRepository $propertyRepository,
+        PropertyService $propertyService
     )
     {
         $this->partnerRepository = $partnerRepository;
         $this->partnerService = $partnerService;
+        $this->propertyRepository = $propertyRepository;
+        $this->propertyService = $propertyService;
     }
 
     /**
@@ -50,7 +62,9 @@ class PartnersController extends Controller
      */
     public function create()
     {
-        return view('app.partners.create');
+        $properties = $this->propertyRepository->getAllCollection();
+
+        return view('app.partners.create', compact('properties'));
     }
 
     /**
@@ -65,7 +79,7 @@ class PartnersController extends Controller
         try {
             $this->partnerService->create($request->all());
 
-            return redirect()->route('partners.index', compact('partners'));
+            return redirect()->route('partners.index');
         } catch (\Exception $e) {
 
             $page = $request->get('page') ? $request->get('page') : 1;
@@ -108,8 +122,10 @@ class PartnersController extends Controller
     public function edit(Request $request, $id)
     {
         $partner = $this->partnerRepository->findById($id);
+        $properties = $this->propertyRepository->getAllCollection();
+
         if ($partner) {
-            return view('app.partners.edit', compact('partner'));
+            return view('app.partners.edit', compact('partner', 'properties'));
         } else {
             $page = $request->get('page') ? $request->get('page') : 1;
             $partners = $this->partnerRepository->getAll($page, 10);

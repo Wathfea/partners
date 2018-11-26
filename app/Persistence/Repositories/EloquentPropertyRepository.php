@@ -2,21 +2,23 @@
 
 namespace App\Persistence\Repositories;
 
-use App\Models\Partner;
+use App\Models\Property;
 use App\Persistence\Repositories\Interfaces\PropertyRepository;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
-class ElloquentPropertyRepository implements PropertyRepository
+
+class EloquentPropertyRepository implements PropertyRepository
 {
-    /* @var Partner */
+    /* @var Property */
     private $model;
 
     /**
      * EloquentPartnerRepository constructor.
      *
-     * @param Partner $model
+     * @param Property $model
      */
-    public function __construct(Partner $model)
+    public function __construct(Property $model)
     {
         $this->model = $model;
     }
@@ -34,15 +36,15 @@ class ElloquentPropertyRepository implements PropertyRepository
     /**
      * @inheritDoc
      */
-    public function store(Partner $partner): bool
+    public function store(Property $property): bool
     {
-        return $partner->save();
+        return $property->save();
     }
 
     /**
      * @inheritDoc
      */
-    public function findById(int $id): ?Partner
+    public function findById(int $id): ?Property
     {
         return $this->model->find($id);
     }
@@ -52,19 +54,27 @@ class ElloquentPropertyRepository implements PropertyRepository
      */
     public function remove(int $id): bool
     {
-        $partner = $this->findById($id);
+        $property = $this->findById($id);
 
-        return $partner->delete();
+        return $property->delete();
     }
 
     /**
      * @inheritDoc
      */
-    public function update(int $id, array $data): Partner
+    public function update(int $id, array $data): Property
     {
-        $partner = $this->findById($id);
-        $partner->fill($data)->save();
+        $property = $this->findById($id);
+        $property->fill($data)->save();
 
-        return $partner;
+        return $property;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAllCollection(): Collection
+    {
+        return $this->model->all();
     }
 }

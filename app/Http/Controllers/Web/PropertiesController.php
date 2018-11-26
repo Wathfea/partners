@@ -10,7 +10,7 @@ use App\Services\PartnerService;
 use App\Services\PropertyService;
 use Illuminate\Http\Request;
 
-class PropertyController extends Controller
+class PropertiesController extends Controller
 {
     /** @var PartnerRepository */
     private $propertyRepository;
@@ -40,9 +40,9 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
         $page = $request->get('page') ? $request->get('page') : 1;
-        $partners = $this->propertyRepository->getAll($page, 10);
+        $properties = $this->propertyRepository->getAll($page, 10);
 
-        return view('app.partners.index', compact('partners'));
+        return view('app.properties.index', compact('properties'));
     }
 
     /**
@@ -52,7 +52,7 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('app.partners.create');
+        return view('app.properties.create');
     }
 
     /**
@@ -67,14 +67,14 @@ class PropertyController extends Controller
         try {
             $this->propertyService->create($request->all());
 
-            return redirect()->route('partners.index', compact('partners'));
+            return redirect()->route('properties.index');
         } catch (\Exception $e) {
 
             $page = $request->get('page') ? $request->get('page') : 1;
-            $partners = $this->propertyRepository->getAll($page, 10);
+            $properties = $this->propertyRepository->getAll($page, 10);
             $error = 'Can\'t save. Something went wrong.';
 
-            return view('app.partners.index', compact('partners', 'error'));
+            return view('app.properties.index', compact('properties', 'error'));
         }
     }
 
@@ -87,16 +87,16 @@ class PropertyController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $partner = $this->propertyRepository->findById($id);
+        $property = $this->propertyRepository->findById($id);
 
-        if ($partner) {
-            return view('app.partners.show', compact('partner'));
+        if ($property) {
+            return view('app.properties.show', compact('property'));
         } else {
             $page = $request->get('page') ? $request->get('page') : 1;
-            $partners = $this->propertyRepository->getAll($page, 10);
+            $properties = $this->propertyRepository->getAll($page, 10);
             $error = 'Can\'t find this resource. #ID:' . $id;
 
-            return view('app.partners.index', compact('partners', 'error'));
+            return view('app.properties.index', compact('properties', 'error'));
         }
     }
 
@@ -109,15 +109,15 @@ class PropertyController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $partner = $this->propertyRepository->findById($id);
-        if ($partner) {
-            return view('app.partners.edit', compact('partner'));
+        $property = $this->propertyRepository->findById($id);
+        if ($property) {
+            return view('app.properties.edit', compact('property'));
         } else {
             $page = $request->get('page') ? $request->get('page') : 1;
-            $partners = $this->propertyRepository->getAll($page, 10);
+            $properties = $this->propertyRepository->getAll($page, 10);
             $error = 'Can\'t find this resource. #ID:' . $id;
 
-            return view('app.partners.index', compact('partners', 'error'));
+            return view('app.properties.index', compact('properties', 'error'));
         }
     }
 
@@ -131,16 +131,16 @@ class PropertyController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $partner = $this->propertyService->update($id, $request->all());
+            $property = $this->propertyService->update($id, $request->all());
 
-            return view('app.partners.show', compact('partner'));
+            return view('app.properties.show', compact('property'));
         } catch (\Exception $e) {
 
             $page = $request->get('page') ? $request->get('page') : 1;
-            $partners = $this->propertyRepository->getAll($page, 10);
+            $properties = $this->propertyRepository->getAll($page, 10);
             $error = 'Can\'t update. Something went wrong.';
 
-            return view('app.partners.index', compact('partners', 'error'));
+            return view('app.properties.index', compact('properties', 'error'));
         }
     }
 
@@ -156,13 +156,13 @@ class PropertyController extends Controller
         try {
             $this->propertyService->delete($id);
 
-            return redirect()->route('partners.index', compact('partners'));
+            return redirect()->route('properties.index');
         } catch (\Exception $e) {
             $page = $request->get('page') ? $request->get('page') : 1;
-            $partners = $this->propertyRepository->getAll($page, 10);
+            $properties = $this->propertyRepository->getAll($page, 10);
             $error = 'Can\'t delete. Something went wrong.';
 
-            return view('app.partners.index', compact('partners', 'error'));
+            return view('app.partners.index', compact('properties', 'error'));
         }
     }
 }

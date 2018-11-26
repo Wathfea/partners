@@ -1,7 +1,7 @@
 @extends('app.layouts.master')
 
 @section('content')
-    <h1> Partners </h1>
+    <h1> Properties </h1>
 
     @include('app.layouts.messages')
 
@@ -10,23 +10,33 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">Point</th>
+            <th scope="col">Type</th>
+            <th scope="col">Value</th>
             <th scope="col">Actions</th>
             <th scope="col">Delete</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($partners as $partner)
+        @foreach($properties as $property)
             <tr>
-                <th scope="row">{{ $partner->id }}</th>
-                <td>{{ $partner->name }}</td>
-                <td>{{ $partner->point }}</td>
+                <th scope="row">{{ $property->id }}</th>
+                <td>{{ $property->name }}</td>
+                <td>{{ $property->type }}</td>
                 <td>
-                    <a href="{{ route('partners.show', $partner->id) }}"><i class="fas fa-eye"></i></a>
-                    <a href="{{ route('partners.edit', $partner->id) }}"><i class="fas fa-edit"></i></a>
+                    @if( $property->type == 'TEXT')
+                        {{ $property->text_value }}
+                    @elseif( $property->type == 'NUMBER')
+                        {{ $property->number_value }}
+                    @else
+                        @if( $property->boolean_value === 1 ) TRUE @else FALSE @endif
+                    @endif
                 </td>
                 <td>
-                    <form action="{{ route('partners.destroy', $partner->id) }}" method="POST">
+                    <a href="{{ route('properties.show', $property->id) }}"><i class="fas fa-eye"></i></a>
+                    <a href="{{ route('properties.edit', $property->id) }}"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                    <form action="{{ route('properties.destroy', $property->id) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button class="btn-sm"><i class="fas fa-trash"></i></button>
@@ -37,5 +47,5 @@
         </tbody>
     </table>
 
-    {{ $partners->links() }}
+    {{ $properties->links() }}
 @endsection

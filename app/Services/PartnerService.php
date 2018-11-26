@@ -34,6 +34,8 @@ class PartnerService
 
         try {
             $newPartner = $this->repository->store($partner);
+            $this->repository->savePivot($partner, $data['properties']);
+
             return $newPartner;
         } catch (\Exception $e) {
             throw $e;
@@ -50,6 +52,8 @@ class PartnerService
     {
         try {
             $newPartner = $this->repository->update($id, $data);
+            $this->repository->savePivot($newPartner, $data['properties']);
+
             return $newPartner;
         } catch (\Exception $e) {
             throw $e;

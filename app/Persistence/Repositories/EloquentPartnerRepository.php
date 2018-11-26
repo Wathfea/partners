@@ -8,7 +8,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 
 class EloquentPartnerRepository implements PartnerRepository
 {
-    /* @var Partner */
+    /** @var Partner */
     private $model;
 
     /**
@@ -56,6 +56,7 @@ class EloquentPartnerRepository implements PartnerRepository
 
         return $partner->delete();
     }
+
     /**
      * @inheritDoc
      */
@@ -65,5 +66,13 @@ class EloquentPartnerRepository implements PartnerRepository
         $partner->fill($data)->save();
 
         return $partner;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function savePivot(Partner $partner, array $propertyIds): array
+    {
+        return $partner->properties()->sync($propertyIds);
     }
 }
