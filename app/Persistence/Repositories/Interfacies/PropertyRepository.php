@@ -2,10 +2,11 @@
 
 namespace App\Persistence\Repositories\Interfaces;
 
-use App\Models\Partner;
+use App\Models\Property;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
-interface PartnerRepository
+interface PropertyRepository
 {
     /**
      * @param int $page
@@ -16,16 +17,21 @@ interface PartnerRepository
     public function getAll(int $page, int $limit): Paginator;
 
     /**
-     * @param Partner $partner
+     * @return Collection
+     */
+    public function getAllCollection(): Collection;
+
+    /**
+     * @param Property $property
      * @return bool
      */
-    public function store(Partner $partner): bool;
+    public function store(Property $property): bool;
 
     /**
      * @param int $id
-     * @return Partner
+     * @return Property
      */
-    public function findById(int $id): ?Partner;
+    public function findById(int $id): ?Property;
 
     /**
      * @param int $id
@@ -36,14 +42,7 @@ interface PartnerRepository
     /**
      * @param int $id
      * @param array $data
-     * @return Partner
+     * @return Property
      */
-    public function update(int $id, array $data): Partner;
-
-    /**
-     * @param Partner $partner
-     * @param array $propertyIds
-     * @return array
-     */
-    public function savePivot(Partner $partner, array $propertyIds): array ;
+    public function update(int $id, array $data): Property;
 }

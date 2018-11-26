@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Partner extends Model
+class Property extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,14 +12,14 @@ class Partner extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'point',
+        'name', 'type', 'text_value', 'number_value', 'boolean_value'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function properties()
+    public function partners()
     {
-        return $this->belongsToMany(Property::class, 'partners_properties')->withTimestamps();
+        return $this->belongsToMany(Partner::class, 'partners_properties');
     }
 }

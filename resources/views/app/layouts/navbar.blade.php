@@ -9,10 +9,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('partners.index') }}">Partners</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('properties.index') }}">Properties</a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="{{ route('partners.create') }}">Add new partner</a>
+                    <a class="dropdown-item" href="{{ route('properties.create') }}">Add new property</a>
                 </div>
             </li>
         </ul>

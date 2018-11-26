@@ -3,23 +3,27 @@
 
 namespace App\Services;
 
+use App\Persistence\Factories\PropertyFactory;
+use App\Persistence\Repositories\Interfaces\PropertyRepository;
 
-use App\Models\Partner;
-use App\Persistence\Repositories\Interfaces\PartnerRepository;
-
-class PartnerService
+class PropertyService
 {
-    /* @var PartnerRepository */
+    /* @var PropertyRepository */
     private $repository;
+    /* @var PropertyFactory */
+    private $propertyFactory;
 
     /**
      * PartnerService constructor.
-     * @param PartnerRepository $repository
+     * @param PropertyRepository $repository
+     * @param PropertyFactory $propertyFactory
      */
-    public function __construct(PartnerRepository $repository)
+    public function __construct(PropertyRepository $repository, PropertyFactory $propertyFactory)
     {
         $this->repository = $repository;
+        $this->propertyFactory = $propertyFactory;
     }
+
 
     /**
      * @param $data
@@ -28,33 +32,30 @@ class PartnerService
      */
     public function create($data)
     {
-        //Ez esetleg mehetne egy külön factoryba, ha sok adatot akarnánk menteni
-        // $this->partnerFactory->createFromRequest($data) ....
-        $partner = new Partner($data);
+        $property = $this->propertyFactory->createFromRequest($data);
 
         try {
-            $newPartner = $this->repository->store($partner);
-            $this->repository->savePivot($partner, $data['properties']);
-
-            return $newPartner;
+            $newProperty = $this->repository->store($property);
+            return $newProperty;
         } catch (\Exception $e) {
             throw $e;
         }
     }
 
+
     /**
      * @param int $id
      * @param array $data
-     * @return Partner
+     * @return \App\Models\Property
      * @throws \Exception
      */
     public function update(int $id, array $data)
     {
-        try {
-            $newPartner = $this->repository->update($id, $data);
-            $this->repository->savePivot($newPartner, $data['properties']);
+        $property = $this->propertyFactory->createFromRequest($data)->toArray();
 
-            return $newPartner;
+        try {
+            $newProperty = $this->repository->update($id, $property);
+            return $newProperty;
         } catch (\Exception $e) {
             throw $e;
         }
