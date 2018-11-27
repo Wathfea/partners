@@ -44,7 +44,7 @@ class EloquentPartnerRepository implements PartnerRepository
      */
     public function findById(int $id): ?Partner
     {
-        return $this->model->find($id);
+        return $this->model->with('properties')->find($id);
     }
 
     /**

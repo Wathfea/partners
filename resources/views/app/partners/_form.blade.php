@@ -10,7 +10,7 @@
     <label for="propertiesSelect">Property select</label>
     <select class="form-control" id="propertiesSelect" name="properties[]" multiple>
         @foreach($properties as $property)
-            <option value="{{$property->id}}">{{$property->name}}</option>
+            <option value="{{$property->id}}" @if(isset($partner) && in_array($property->id, $partnerPropertyIds)) selected @endif>{{$property->name}}</option>
         @endforeach
     </select>
 </div>

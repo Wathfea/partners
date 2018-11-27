@@ -34,7 +34,9 @@ class PartnerService
 
         try {
             $newPartner = $this->repository->store($partner);
-            $this->repository->savePivot($partner, $data['properties']);
+            if ( !empty($data['properties'])) {
+                $this->repository->savePivot($partner, $data['properties']);
+            }
 
             return $newPartner;
         } catch (\Exception $e) {

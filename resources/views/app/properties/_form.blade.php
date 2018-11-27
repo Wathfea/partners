@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="propertyName">Property name</label>
-    <input type="text" class="form-control" id="propertyName" name="name" placeholder="Enter property name" value="@if( isset($property)) {{ $property->name }} @endif">
+    <input type="text" class="form-control" id="propertyName" name="name" placeholder="Enter property name" value="@if( isset($property)){{ $property->name }}@endif">
 </div>
 
 <div class="form-group">
@@ -16,7 +16,7 @@
 <!-- TEXT TYPE -->
 <div class="form-group hiddenElement" data-target="TEXT" @if( isset($property) && $property->type === 'TEXT') style="" @else style="display: none" @endif>
     <label for="propertyText">Text</label>
-    <textarea id="propertyText" name="text" placeholder="Enter the text here">@if( isset($property) && $property->type === 'TEXT' ) {{ $property->text_value }} @endif</textarea>
+    <textarea id="propertyText" name="text" placeholder="Enter the text here">@if( isset($property) && $property->type === 'TEXT' ){{ $property->text_value }}@endif</textarea>
 </div>
 
 <!-- NUMBER TYPE -->

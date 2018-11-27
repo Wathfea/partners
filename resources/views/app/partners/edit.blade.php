@@ -24,7 +24,7 @@
                         @method('PUT')
                         @csrf
                         <div class="box-body">
-                            @include('app.partners._form', $partner)
+                            @include('app.partners._form')
                         </div>
                         <!-- ./box-body -->
 

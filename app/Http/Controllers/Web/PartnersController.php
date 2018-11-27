@@ -123,9 +123,11 @@ class PartnersController extends Controller
     {
         $partner = $this->partnerRepository->findById($id);
         $properties = $this->propertyRepository->getAllCollection();
+        $partnerPropertyIds = $partner->properties->pluck('id')->toArray();
+
 
         if ($partner) {
-            return view('app.partners.edit', compact('partner', 'properties'));
+            return view('app.partners.edit', compact('partner', 'properties', 'partnerPropertyIds'));
         } else {
             $page = $request->get('page') ? $request->get('page') : 1;
             $partners = $this->partnerRepository->getAll($page, 10);
@@ -145,8 +147,8 @@ class PartnersController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $partner = $this->partnerService->update($id, $request->all());
-
+            $this->partnerService->update($id, $request->all());
+            $partner = $this->partnerRepository->findById($id);
             return view('app.partners.show', compact('partner'));
         } catch (\Exception $e) {
 

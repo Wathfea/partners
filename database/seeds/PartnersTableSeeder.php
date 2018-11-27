@@ -11,7 +11,11 @@ class PartnersTableSeeder extends Seeder
      */
     public function run()
     {
-        // Create 50 App\Partner instances...
-        $partners = factory(App\Partner::class, 50)->create();
+        $partners = factory(App\Models\Partner::class, 50)
+            ->create()
+            ->each(function ($partner) {
+                $partner->properties()->save(factory(App\Models\Property::class)->make());
+            });
+
     }
 }
