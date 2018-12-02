@@ -28,10 +28,29 @@
                     <br/>
                     @if( $property->type == 'TEXT')
                         {{ $property->text_value }}
+                        <br />
+                        <br />
+                        The following (<code>{{ $property->numberOfUsedChars() }}</code>) characters used in this text: <code>{{ $property->getUsedChars() }}</code>
                     @elseif( $property->type == 'NUMBER')
                         {{ $property->number_value }}
+                        <br />
+                        <br />
+                        @if($property->isPalindrome())
+                            <code>PALINDROME</code>
+                        @else
+                            <code>NOT PALINDROME</code>
+                        @endif
+                        <br />
+                        <br />
+                        Number raised to 2 is <code>{{ $property->raiseNumberTo(2) }}</code>
+                        Number raised to 5 is <code>{{ $property->raiseNumberTo(5) }}</code>
                     @else
-                        @if( $property->boolean_value === 1 ) TRUE @else FALSE @endif
+                        @if( $property->boolean_value === 1 )
+                            TRUE
+                            <pre>{{ $property->listDoctors }}</pre>
+                        @else
+                            FALSE
+                        @endif
                     @endif
                 </div>
                 <!-- ./box -->
